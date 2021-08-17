@@ -54,9 +54,17 @@
   <ItemGroup>
     <Compile Include="Model\Classes\CocaCola.cs" />
     <Compile Include="Model\Classes\Fanta.cs" />
+    <Compile Include="Model\Classes\SodaBase.cs" />
     <Compile Include="Model\Classes\Sprite.cs" />
+    <Compile Include="Model\Collection\SodaCollection.cs" />
+    <Compile Include="Model\Collection\VendingOperationCollection.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\Interface\ISoda.cs" />
+    <Compile Include="Operations\Exit.cs" />
+    <Compile Include="Operations\Insert.cs" />
+    <Compile Include="Operations\Order.cs" />
+    <Compile Include="Operations\Return.cs" />
+    <Compile Include="Model\Interface\VendingOperationBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Console.cs" />
