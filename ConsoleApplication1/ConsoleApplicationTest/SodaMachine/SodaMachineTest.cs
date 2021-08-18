@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ConsoleApplication1.Model;
-using ConsoleApplication1.Utils;
+using ConsoleApplication1.Model.Collection;
+using ConsoleApplication1.Operations.DeliveryOptions;
 
 namespace ConsoleApplication1.Test
 {
@@ -10,57 +11,46 @@ namespace ConsoleApplication1.Test
         [TestMethod]
         public void ZeroQuantityTest()
         {
-            SodaMachine machine = new SodaMachine(false);
-            ISoda testSoda = new CocaCola() { Name = "test", Price = 10, Quantity = 0 };
-            machine.AddSoda(testSoda);
-            Assert.IsFalse(machine.CanDeliver(testSoda.Name, out ISoda temp));
+            SodaCollection collection = new SodaCollection(false);
+            Soda testSoda = new Soda() { Name = "test", Price = 10, Quantity = 0 };
+            collection.AddSoda(testSoda);
+            Assert.IsFalse(collection.CanDeliver(testSoda.Name, out Soda temp));
         }
         [TestMethod]
         public void PlusQuantityTest()
         {
-            SodaMachine machine = new SodaMachine(false);
-            ISoda testSoda = new CocaCola() { Name = "test", Price = 10, Quantity = 1 };
-            machine.AddSoda(testSoda);
-            Assert.IsTrue(machine.CanDeliver(testSoda.Name, out ISoda temp));
+            SodaCollection collection = new SodaCollection(false);
+            Soda testSoda = new Soda() { Name = "test", Price = 10, Quantity = 1 };
+            collection.AddSoda(testSoda);
+            Assert.IsTrue(collection.CanDeliver(testSoda.Name, out Soda temp));
         }
 
         [TestMethod]
         public void ZeroCreditTest()
         {
-            SodaMachine machine = new SodaMachine(false);
+            Soda testSoda = new Soda() { Name = "test", Price = 10, Quantity = 1 };
 
-            ISoda testSoda = new CocaCola() { Name = "test", Price = 10, Quantity = 1 };
-            machine.AddSoda(testSoda);
+            Direct directDelivery = new Direct();
 
-            //Do not add credit
-
-            Assert.IsFalse(machine.HasEnoughCredit(machine["test"]));
+            Assert.IsFalse(directDelivery.CanDeliver(testSoda, 0));
         }
         [TestMethod]
         public void NotEnoughCreditTest()
         {
-            SodaMachine machine = new SodaMachine(false);
+            Soda testSoda = new Soda() { Name = "test", Price = 10, Quantity = 1 };
 
-            ISoda testSoda = new CocaCola() { Name = "test", Price = 10, Quantity = 1 };
-            machine.AddSoda(testSoda);
+            Direct directDelivery = new Direct();
 
-            //Add credit that is not enough
-            machine.AddCredit(9);
-
-            Assert.IsFalse(machine.HasEnoughCredit(machine["test"]));
+            Assert.IsFalse(directDelivery.CanDeliver(testSoda, 9));
         }
         [TestMethod]
         public void EnoughCreditTest()
         {
-            SodaMachine machine = new SodaMachine(false);
+            Soda testSoda = new Soda() { Name = "test", Price = 10, Quantity = 1 };
 
-            ISoda testSoda = new CocaCola() { Name = "test", Price = 10, Quantity = 1 };
-            machine.AddSoda(testSoda);
+            Direct directDelivery = new Direct();
 
-            //Add credit that is enough for the purchase
-            machine.AddCredit(10);
-
-            Assert.IsTrue(machine.HasEnoughCredit(machine["test"]));
+            Assert.IsTrue(directDelivery.CanDeliver(testSoda, 10));
         }
     }
 }

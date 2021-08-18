@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1.Model
 {
-    public abstract class SodaBase : ISoda
+    public class Soda
     {
         public string Name { get; set; }
         public decimal Price { get; set; }

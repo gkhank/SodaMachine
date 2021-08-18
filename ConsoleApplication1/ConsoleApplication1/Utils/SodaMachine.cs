@@ -15,10 +15,7 @@ namespace ConsoleApplication1.Utils
         public SodaMachine(Boolean initInventory = true)
         {
             this._sodaCollection = new SodaCollection(initInventory);
-
         }
-
-        public ISoda this[string key] => this._sodaCollection[key];
 
         /// <summary>
         /// This is the starter method for the machine
@@ -28,25 +25,21 @@ namespace ConsoleApplication1.Utils
 
             while (true)
             {
+                AssemblyCollection<IVendingOperation> collection = new AssemblyCollection<IVendingOperation>("ConsoleApplication1.Operations.Commands");
 
-                Operation? c;
+                IVendingOperation operation = null;
+                string input;
                 do
                 {
                     Console.WriteLine("Please select an operation to proceed :");
-                    String[] commands = Enum.GetNames(typeof(Operation));
-                    for (int i = 0; i < commands.Length - 1; i++)
-                        Console.WriteLine("{0} - {1}", i + 1, commands[i]);
+                    collection.PrintOptions();
+                    input = Console.ReadLine();
 
-                    Console.WriteLine("{0} - {1}", 0, commands.Last());
                 }
-                while (Converter.TryConvert(Console.ReadLine(), out c) == false);
+                while (((Int32.TryParse(input, out Int32 intInput) && collection.TryGetByIndex(intInput, out operation)) == false) &&
+                        collection.TryGet(input, out operation) == false);
 
-                VendingOperationCollection collection = new VendingOperationCollection();
-
-                if (collection.TryGetOperation(c.Value, out IVendingOperation operation))
-                    operation.DoOperation(this._sodaCollection, ref this._currentCredit);
-                else
-                    throw new NotImplementedException();
+                operation.DoOperation(this._sodaCollection, ref this._currentCredit);
 
             }
         }
