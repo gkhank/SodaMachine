@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1.Model.Collection
 {
-    public class SodaCollection : IEnumerable<ISoda>
+    public class SodaCollection : IEnumerable<Soda>
     {
-        private readonly Dictionary<String, ISoda> _innerCollection;
+        private readonly Dictionary<String, Soda> _innerCollection;
         public SodaCollection(Boolean initInventory)
         {
-            this._innerCollection = new Dictionary<string, ISoda>();
+            this._innerCollection = new Dictionary<string, Soda>();
             if (initInventory)
                 this.InitInventory();
         }
 
 
-        public ISoda this[string key] => this._innerCollection[key];
+        public Soda this[string key] => this._innerCollection[key];
         internal void ReportInventory()
         {
 
             int i = 1;
-            foreach (ISoda s in this)
+            foreach (Soda s in this)
             {
                 Console.WriteLine("{3} - {0} ({1} item(s) left), {2}kr ", s.Name, s.Quantity, s.Price, i);
                 i++;
@@ -33,14 +33,14 @@ namespace ConsoleApplication1.Model.Collection
         private void InitInventory()
         {
             //Get from source? database?
-            this.AddSoda(new CocaCola() { Name = "Coke", Price = 20, Quantity = 5 });
-            this.AddSoda(new Sprite() { Name = "Sprite", Price = 15, Quantity = 3 });
-            this.AddSoda(new Fanta() { Name = "Fanta", Price = 13, Quantity = 1 });
+            this.AddSoda(new Soda() { Name = "Coke", Price = 20, Quantity = 5 });
+            this.AddSoda(new Soda() { Name = "Sprite", Price = 15, Quantity = 3 });
+            this.AddSoda(new Soda() { Name = "Fanta", Price = 13, Quantity = 1 });
 
             //var inventory = new[] { new Soda { Name = "coke", Nr = 5, Price = 20, Quantity = 10 }, new Soda { Name = "sprite", Nr = 3, Price = 15, Quantity }, new Soda { Name = "fanta", Nr = 3, Price = 12 } };
 
         }
-        public void AddSoda(ISoda soda)
+        public void AddSoda(Soda soda)
         {
             string key = soda.Name.ToLower();
             if (this._innerCollection.ContainsKey(key))
@@ -54,12 +54,12 @@ namespace ConsoleApplication1.Model.Collection
             else
                 this._innerCollection.Add(soda.Name.ToLower(), soda);
         }
-        private Boolean TryGetSodaByIndex(Int32 index, out ISoda soda)
+        private Boolean TryGetSodaByIndex(Int32 index, out Soda soda)
         {
             soda = this._innerCollection.Values.ElementAt(index - 1);
             return soda != null;
         }
-        public IEnumerator<ISoda> GetEnumerator()
+        public IEnumerator<Soda> GetEnumerator()
         {
             return this._innerCollection.Values.GetEnumerator();
         }
@@ -67,7 +67,7 @@ namespace ConsoleApplication1.Model.Collection
         {
             return this._innerCollection.Values.GetEnumerator();
         }
-        public bool CanDeliver(string input, out ISoda selectedSoda)
+        public bool CanDeliver(string input, out Soda selectedSoda)
         {
             Boolean retval = ((this._innerCollection.TryGetValue(input, out selectedSoda) ||
                                 Int32.TryParse(input, out Int32 index) && this.TryGetSodaByIndex(index, out selectedSoda))

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1.Operations
+namespace ConsoleApplication1.Operations.Commands
 {
-    class Exit : IVendingOperation
+    public class Exit : IVendingOperation
     {
         public void DoOperation(SodaCollection sodaCollection, ref decimal credit)
         {

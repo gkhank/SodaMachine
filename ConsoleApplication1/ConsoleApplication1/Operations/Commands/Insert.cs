@@ -2,9 +2,9 @@
 using ConsoleApplication1.Model.Collection;
 using System;
 
-namespace ConsoleApplication1.Operations
+namespace ConsoleApplication1.Operations.Commands
 {
-    class Insert : IVendingOperation
+    public class Insert : IVendingOperation
     {
         public void DoOperation(SodaCollection sodaCollection, ref decimal credit)
         {
