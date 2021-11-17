@@ -58,7 +58,6 @@
     <Compile Include="Model\Interface\IDeliveryOption.cs" />
     <Compile Include="Model\Soda.cs" />
     <Compile Include="Model\Collection\SodaCollection.cs" />
-    <Compile Include="Model\Enums.cs" />
     <Compile Include="Operations\Commands\Exit.cs" />
     <Compile Include="Operations\Commands\Insert.cs" />
     <Compile Include="Operations\Commands\Order.cs" />
